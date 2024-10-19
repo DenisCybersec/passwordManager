@@ -1,0 +1,16 @@
+QT += widgets 
+SOURCES += src/crypto/aes.cpp src/crypto/pbkdf2.cpp src/crypto/sha256.cpp src/crypto/salt.cpp
+SOURCES += src/qt/editEntryDialogue.cpp src/qt/entryDialogue.cpp src/qt/dbOpener.cpp src/qt/dbWindow.cpp src/qt/mainwindow.cpp src/qt/fileselector.cpp src/qt/dbCreator.cpp
+SOURCES += src/structure/entry.cpp src/structure/database.cpp
+SOURCES += src/formating/hex.cpp
+SOURCES += src/cli/mainCycle.cpp
+SOURCES += src/gui/gui.cpp
+SOURCES += src/main.cpp
+HEADERS += include/crypto/aes.hpp include/crypto/encryption.hpp include/crypto/salt.hpp include/crypto/hash.hpp include/crypto/keyderive.hpp include/crypto/pbkdf2.hpp include/crypto/sha256.hpp
+HEADERS += include/qt/editEntryDialogue.hpp include/qt/entryDialogue.hpp include/qt/dbOpener.hpp include/qt/dbWindow.hpp include/qt/mainwindow.hpp include/qt/fileselector.hpp include/qt/dbCreator.hpp
+HEADERS += include/formating/hex.hpp
+HEADERS += include/cli/mainCycle.hpp
+HEADERS += include/gui/gui.hpp
+HEADERS += include/structure/entry.hpp include/structure/database.hpp
+INCLUDEPATH += /usr/include/openssl /usr/local/include/nlohmann
+LIBS += -L/usr/lib -lssl -lcrypto -lgtest

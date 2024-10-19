@@ -1,0 +1,12 @@
+QT += widgets
+SOURCES += src/crypto/aes.cpp src/crypto/pbkdf2.cpp src/crypto/sha256.cpp src/crypto/salt.cpp
+SOURCES += src/qt/mainwindow.cpp
+SOURCES += src/structure/entry.cpp src/structure/database.cpp
+SOURCES += src/formating/hex.cpp
+SOURCES += tests/structure/databaseTest.cpp tests/structure/entryTest.cpp tests/formating/hexTest.cpp tests/crypto/aesTest.cpp tests/maintest.cpp tests/crypto/pbkdf2Test.cpp tests/crypto/sha256Test.cpp tests/crypto/saltTest.cpp
+HEADERS += include/crypto/aes.hpp include/crypto/encryption.hpp include/crypto/salt.hpp include/crypto/hash.hpp include/crypto/keyderive.hpp include/crypto/pbkdf2.hpp include/crypto/sha256.hpp
+HEADERS += include/qt/mainwindow.hpp
+HEADERS += include/formating/hex.hpp
+HEADERS += include/structure/entry.hpp include/structure/database.hpp
+INCLUDEPATH += /usr/include/openssl /usr/local/include/nlohmann
+LIBS += -L/usr/lib -lssl -lcrypto -lgtest
