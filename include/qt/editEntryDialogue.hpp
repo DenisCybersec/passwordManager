@@ -19,6 +19,8 @@ class EditEntryDialog : public QDialog
         QLineEdit* serviceName;
         QLineEdit* login;
         QLineEdit* password;
+        QPushButton *submitButton;
+        QVBoxLayout *layout;
         void* f;
         int place;
         void onSubmit();

@@ -16,6 +16,8 @@ class EntryDialog : public QDialog
     public:
         EntryDialog(DatabaseWindow* window);
     private:
+        QPushButton *submitButton;
+        QVBoxLayout *layout;
         QLineEdit* serviceName;
         QLineEdit* login;
         QLineEdit* password;

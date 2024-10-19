@@ -23,11 +23,13 @@ class Database
         std::string getKeyHash();
         std::string getKey();
         std::string getPath();
+        Salt* getGen();
         Database(Hash* hashAlgo, Encryption* encryptionAlgo, KeyDerive* keyDeriveAlgo,std::string databasePassword, std::string salt,std::string path); //create new one
         Database(nlohmann::json j, std::string password,std::map<std::string,void*> mp,std::string path); // restore Database from file
     private:
         std::vector<Entry*> Entries = std::vector<Entry*>();
         std::map<std::string,void*> stringToFunction;
+        Salt* gen = new Salt();
         std::string keyHash;
         std::string key;
         std::string salt;

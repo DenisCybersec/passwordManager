@@ -15,7 +15,7 @@ TEST(dbTest,dbTest)
     std::map<std::string, void*> mp = {{"SHA256",sha256},{"AES",aes},{"PBKDF2",pbkdf2}};
     std::string password = "password";
     std::string salt = "1234";
-    Database* db = new Database(sha256,aes,pbkdf2,password,salt);
+    Database* db = new Database(sha256,aes,pbkdf2,password,salt,"");
     std::string hash = db->getKeyHash();
     std::string key = db->getKey();
     EXPECT_EQ(key,pbkdf2->getKey(password,salt));
@@ -29,9 +29,9 @@ TEST(dbTest,dbTest)
     entry->setServiceName(serviceName);
     db->addEntry(entry);
     nlohmann::json j = db->exportToJson();
-    Database* restoredBase = new Database(j,"password",mp); 
+    Database* restoredBase = new Database(j,"password",mp,""); 
     EXPECT_EQ(db->getKey(),restoredBase->getKey());
     std::cout << db->noEncryptionToJson();
     EXPECT_EQ(db->noEncryptionToJson().dump(1),restoredBase->noEncryptionToJson().dump(1));
-    EXPECT_ANY_THROW(Database* restoredBase = new Database(j,"pass",mp));
+    EXPECT_ANY_THROW(Database* restoredBase = new Database(j,"pass",mp,""));
 }

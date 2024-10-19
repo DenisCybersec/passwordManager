@@ -5,36 +5,33 @@
 #include<include/crypto/salt.hpp>
 #include<include/structure/database.hpp>
 #include<include/qt/dbWindow.hpp>
-void DataBaseCreator::onClick(QLineEdit* password,Sha256* sha256,AES* aes,PBKDF2* pbkdf2,std::string filePath)
+void DataBaseCreator::onClick(QLineEdit* password,Hash* sha256,Encryption* aes,KeyDerive* pbkdf2,std::string filePath)
 {
-    // Retrieve the text from QLineEdit
     QString inputText = password->text();
-    // Process the input (for demonstration, we'll just print it)
-    std::string salt = "1234";
+    std::string salt = this->saltGenerator->generateSalt(32);
     std::string pass = inputText.toStdString();
     Database* db = new Database(sha256,aes,pbkdf2,pass,salt,filePath);
-    std::cout << "User input:" << inputText.toStdString() << std::endl;
     this->db = db;
-    DatabaseWindow* dbWindow = new DatabaseWindow(nullptr,this->db);
+    this->dbWindow = new DatabaseWindow(nullptr,this->db);
 }
 DataBaseCreator::DataBaseCreator(QWidget *parent,std::string filePath) : QWidget(parent)
 {
     this->setWindowTitle("Enter password");
     this->resize(300,200);
     this->show();
-    QVBoxLayout *layout = new QVBoxLayout(this);
-    QLineEdit *password = new QLineEdit(this);
-    QPushButton *submit = new QPushButton(this);
-    hexFormating* hex = new hexFormating();
-    PBKDF2* pbkdf2 = new PBKDF2(1000,32,hex);
-    Sha256* sha256 = new Sha256();
-    AES* aes = new AES(pbkdf2,hex);
-    submit->setText("Submit password");
-    layout->addWidget(password);
-    layout->addWidget(submit);
-    std::string& pass();
-    connect(submit, &QPushButton::clicked, this, [password, sha256, aes, pbkdf2,filePath, this]() {
-        this->onClick(password, sha256, aes, pbkdf2,filePath);
+    this->saltGenerator = new Salt();
+    this->layout = new QVBoxLayout(this);
+    this->password = new QLineEdit(this);
+    this->submitButton = new QPushButton(this);
+    this->hexFunction = new hexFormating();
+    this->keyDeriveFunction = new PBKDF2(1000,32,this->hexFunction);
+    this->hashFunction = new Sha256();
+    this->encryptionFunction = new AES(this->keyDeriveFunction,this->hexFunction);
+    this->submitButton->setText("Submit password");
+    this->layout->addWidget(this->password);
+    this->layout->addWidget(this->submitButton);
+    connect(this->submitButton, &QPushButton::clicked, this, [this,filePath]() {
+        this->onClick(this->password, this->hashFunction, this->encryptionFunction, this->keyDeriveFunction,filePath);
     });
 
 }

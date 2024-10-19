@@ -50,6 +50,10 @@ std::string Database::getPath()
 {
     return this->path;
 }
+Salt* Database::getGen()
+{
+    return this->gen;
+}
 // Dump database to json for export
 nlohmann::json Database::exportToJson()
 {

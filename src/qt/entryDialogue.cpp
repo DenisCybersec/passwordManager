@@ -8,19 +8,19 @@ EntryDialog::EntryDialog(DatabaseWindow* window) : QDialog(window)
         this->f = f;
         this->window=window;
         // Create a button
-        QPushButton *submitButton = new QPushButton("Submit", this);
+        this->submitButton = new QPushButton("Submit", this);
         // Layout setup
-        QVBoxLayout *layout = new QVBoxLayout(this);
-        layout->addWidget(new QLabel("Service Name:"));
-        layout->addWidget(this->serviceName);
-        layout->addWidget(new QLabel("Login:"));
-        layout->addWidget(this->login);
-        layout->addWidget(new QLabel("Password:"));
-        layout->addWidget(this->password);
-        layout->addWidget(submitButton);
-        setLayout(layout);
+        this->layout = new QVBoxLayout(this);
+        this->layout->addWidget(new QLabel("Service Name:"));
+        this->layout->addWidget(this->serviceName);
+        this->layout->addWidget(new QLabel("Login:"));
+        this->layout->addWidget(this->login);
+        this->layout->addWidget(new QLabel("Password:"));
+        this->layout->addWidget(this->password);
+        this->layout->addWidget(this->submitButton);
+        setLayout(this->layout);
         // Connect button click to slot
-        connect(submitButton, &QPushButton::clicked, this, &EntryDialog::onSubmit);
+        connect(this->submitButton, &QPushButton::clicked, this, &EntryDialog::onSubmit);
 
 }
 void EntryDialog::onSubmit()
