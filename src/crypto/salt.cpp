@@ -1,6 +1,6 @@
 #include<include/crypto/salt.hpp>
 #include<include/formating/hex.hpp>
-std::string Salt::generateSalt(int saltLength)
+std::string Salt::generateSalt(int saltLength) const
 {
     std::vector<unsigned char> salt(saltLength/2);
     RAND_bytes(salt.data(), saltLength/2);

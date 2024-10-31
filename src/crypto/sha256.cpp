@@ -1,5 +1,5 @@
 #include<include/crypto/sha256.hpp>
-std::string Sha256::getHash(std::string& input){
+std::string Sha256::getHash(const std::string& input) const{
     unsigned char hash[SHA256_DIGEST_LENGTH];
     SHA256(reinterpret_cast<const unsigned char*>(input.c_str()), input.size(), hash);
     std::stringstream stream;

@@ -1,5 +1,5 @@
 #include<include/formating/hex.hpp>
-std::string hexFormating::unsignedCharToHex(std::vector<unsigned char> input)
+std::string hexFormating::unsignedCharToHex(const std::vector<unsigned char>& input) const
 {
     std::stringstream stream;
     for (int i = 0; i < input.size(); ++i){
@@ -7,7 +7,7 @@ std::string hexFormating::unsignedCharToHex(std::vector<unsigned char> input)
     }
     return stream.str();
 }
-std::vector<unsigned char> hexFormating::hexToUnsignedChar(std::string input)
+std::vector<unsigned char> hexFormating::hexToUnsignedChar(const std::string& input) const
 {
     std::vector<unsigned char> hex(input.length() / 2);
     for (int i = 0; i < input.length(); i += 2) {

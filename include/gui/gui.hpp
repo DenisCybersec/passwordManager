@@ -1,9 +1,10 @@
-#ifndef GUI_H
-#define GUI_H
+#ifndef GUI_HPP
+#define GUI_HPP
+
 #include <QApplication>
 #include <QMainWindow>
-class GUI
-{
+
+class GUI{
     public:
         int start(int argc, char *argv[]);
 };

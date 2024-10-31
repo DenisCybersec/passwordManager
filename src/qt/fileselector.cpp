@@ -1,12 +1,12 @@
 #include<include/qt/fileselector.hpp>
 FileSelector::FileSelector(QWidget *parent) : QWidget(parent) {
-        this->layout = new QVBoxLayout(this);
-        this->openDbButton = new QPushButton("Open Database", this);
-        this->createDbButton = new QPushButton("Create New Database", this);
-        this->layout->addWidget(this->openDbButton);
-        this->layout->addWidget(this->createDbButton);
-        connect(this->openDbButton, &QPushButton::clicked, this, &FileSelector::openDatabase);
-        connect(this->createDbButton, &QPushButton::clicked, this, &FileSelector::createDatabase);
+        this->layout_ = new QVBoxLayout(this);
+        this->open_db_button = new QPushButton("Open Database", this);
+        this->create_db_button = new QPushButton("Create New Database", this);
+        this->layout_->addWidget(this->open_db_button);
+        this->layout_->addWidget(this->create_db_button);
+        connect(this->open_db_button, &QPushButton::clicked, this, &FileSelector::openDatabase);
+        connect(this->create_db_button, &QPushButton::clicked, this, &FileSelector::createDatabase);
 }
 void FileSelector::openDatabase()
 {

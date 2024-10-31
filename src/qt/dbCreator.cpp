@@ -8,30 +8,30 @@
 void DataBaseCreator::onClick(QLineEdit* password,Hash* sha256,Encryption* aes,KeyDerive* pbkdf2,std::string filePath)
 {
     QString inputText = password->text();
-    std::string salt = this->saltGenerator->generateSalt(32);
+    std::string salt = this->salt_generator_->generateSalt(32);
     std::string pass = inputText.toStdString();
     Database* db = new Database(sha256,aes,pbkdf2,pass,salt,filePath);
-    this->db = db;
-    this->dbWindow = new DatabaseWindow(nullptr,this->db);
+    this->db_ = db;
+    this->db_window_ = new DatabaseWindow(nullptr,this->db_);
 }
 DataBaseCreator::DataBaseCreator(QWidget *parent,std::string filePath) : QWidget(parent)
 {
     this->setWindowTitle("Enter password");
     this->resize(300,200);
     this->show();
-    this->saltGenerator = new Salt();
-    this->layout = new QVBoxLayout(this);
-    this->password = new QLineEdit(this);
-    this->submitButton = new QPushButton(this);
-    this->hexFunction = new hexFormating();
-    this->keyDeriveFunction = new PBKDF2(1000,32,this->hexFunction);
-    this->hashFunction = new Sha256();
-    this->encryptionFunction = new AES(this->keyDeriveFunction,this->hexFunction);
-    this->submitButton->setText("Submit password");
-    this->layout->addWidget(this->password);
-    this->layout->addWidget(this->submitButton);
-    connect(this->submitButton, &QPushButton::clicked, this, [this,filePath]() {
-        this->onClick(this->password, this->hashFunction, this->encryptionFunction, this->keyDeriveFunction,filePath);
+    this->salt_generator_ = new Salt();
+    this->layout_ = new QVBoxLayout(this);
+    this->password_ = new QLineEdit(this);
+    this->submit_button_ = new QPushButton(this);
+    this->hex_function_ = new hexFormating();
+    this->key_derive_function_ = new PBKDF2(1000,32,this->hex_function_);
+    this->hash_function_ = new Sha256();
+    this->encryption_function_ = new AES(this->key_derive_function_,this->hex_function_);
+    this->submit_button_->setText("Submit password");
+    this->layout_->addWidget(this->password_);
+    this->layout_->addWidget(this->submit_button_);
+    connect(this->submit_button_, &QPushButton::clicked, this, [this,filePath]() {
+        this->onClick(this->password_, this->hash_function_, this->encryption_function_, this->key_derive_function_,filePath);
     });
 
 }

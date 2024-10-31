@@ -2,13 +2,13 @@
 #include <include/crypto/keyderive.hpp>
 #define AES_KEY_SIZE 256
 #define AES_BLOCK_SIZE 16
-std::string AES::encryptData(std::string& data, std::string& password, std::string& salt)
+std::string AES::encryptData(const std::string& data,const std::string& password, const std::string& salt) const
 {
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
     std::vector<unsigned char> ciphertext(data.size() + EVP_MAX_BLOCK_LENGTH);
     int len, ciphertext_len;
     std::vector<unsigned char> iv;
-    std::string key = this->keyDeriveFunction->getKey(password, salt);
+    std::string key = this->key_derive_function_->getKey(password, salt);
         // Initialize AES encryption context with AES-256-CBC
         if (1 != EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), 0, reinterpret_cast<const unsigned char*>(key.c_str()), iv.data())) {
             
@@ -27,17 +27,17 @@ std::string AES::encryptData(std::string& data, std::string& password, std::stri
         ciphertext_len += len;
         EVP_CIPHER_CTX_free(ctx);
         ciphertext.resize(ciphertext_len); // Adjust size to actual ciphertext length
-        std::string hex = this->hexFunctions->unsignedCharToHex(ciphertext);
+        std::string hex = this->hex_function_->unsignedCharToHex(ciphertext);
         return hex;
 }
-std::string AES::decryptData(std::string& encryptedText, std::string& password,std::string& salt)
+std::string AES::decryptData(const std::string& encryptedText, const std::string& password,const std::string& salt) const
 {
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
     std::vector<unsigned char> decryptedText(encryptedText.size()); // Allocate sufficient space for decrypted text
     int len, decrypted_len;
-    std::string key = this->keyDeriveFunction->getKey(password, salt);
+    std::string key = this->key_derive_function_->getKey(password, salt);
     // Convert hex string to byte array
-    std::vector<unsigned char> ciphertext = this->hexFunctions->hexToUnsignedChar(encryptedText);
+    std::vector<unsigned char> ciphertext = this->hex_function_->hexToUnsignedChar(encryptedText);
     // Initialize AES decryption context with AES-256-CBC
     if (1 != EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), nullptr, reinterpret_cast<const unsigned char*>(key.c_str()), nullptr)) {
         EVP_CIPHER_CTX_free(ctx);
@@ -62,22 +62,22 @@ std::string AES::decryptData(std::string& encryptedText, std::string& password,s
 }
 void AES::setKDF(KeyDerive* keyDeriveFunction)
 {
-    this->keyDeriveFunction = keyDeriveFunction;
+    this->key_derive_function_ = keyDeriveFunction;
 }
-KeyDerive* AES::getKDF()
+KeyDerive* AES::getKDF() const
 {
-    return this->keyDeriveFunction;
+    return this->key_derive_function_;
 }
 void AES::setHex(hexFormating* hexFunctions)
 {
-    this->hexFunctions = hexFunctions;
+    this->hex_function_ = hexFunctions;
 }
-hexFormating* AES::getHex()
+hexFormating* AES::getHex() const
 {
-    return this->hexFunctions;
+    return this->hex_function_;
 }
 AES::AES(KeyDerive* keyDeriveFunction,hexFormating* hexFunctions)
 {
-    this->keyDeriveFunction = keyDeriveFunction;
-    this->hexFunctions = hexFunctions;
+    this->key_derive_function_ = keyDeriveFunction;
+    this->hex_function_ = hexFunctions;
 }

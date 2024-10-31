@@ -3,33 +3,32 @@
 EditEntryDialog::EditEntryDialog(DatabaseWindow* window,std::string serviceName,std::string login ,std::string password,int place) : QDialog(window)
 {
     // Create input fields
-        this->place = place;
-        this->serviceName = new QLineEdit(this);
-        this->serviceName->setText(QString::fromStdString(serviceName));
-        this->login = new QLineEdit(this);
-        this->login->setText(QString::fromStdString(login));
-        this->password = new QLineEdit(this);
-        this->password->setText(QString::fromStdString(password));
-        this->f = f;
-        this->window=window;
+        this->place_ = place;
+        this->service_name_ = new QLineEdit(this);
+        this->service_name_->setText(QString::fromStdString(serviceName));
+        this->login_ = new QLineEdit(this);
+        this->login_->setText(QString::fromStdString(login));
+        this->password_ = new QLineEdit(this);
+        this->password_->setText(QString::fromStdString(password));
+        this->f_ = f_;
+        this->window_=window;
         // Create a button
-        this->submitButton = new QPushButton("Submit", this);
+        this->submit_button_ = new QPushButton("Submit", this);
         // Layout setup
-        this->layout = new QVBoxLayout(this);
-        this->layout->addWidget(new QLabel("Service Name:"));
-        this->layout->addWidget(this->serviceName);
-        this->layout->addWidget(new QLabel("Login:"));
-        this->layout->addWidget(this->login);
-        this->layout->addWidget(new QLabel("Password:"));
-        this->layout->addWidget(this->password);
-        this->layout->addWidget(submitButton);
-        setLayout(this->layout);
+        this->layout_ = new QVBoxLayout(this);
+        this->layout_->addWidget(new QLabel("Service Name:"));
+        this->layout_->addWidget(this->service_name_);
+        this->layout_->addWidget(new QLabel("Login:"));
+        this->layout_->addWidget(this->login_);
+        this->layout_->addWidget(new QLabel("Password:"));
+        this->layout_->addWidget(this->password_);
+        this->layout_->addWidget(submit_button_);
+        setLayout(this->layout_);
         // Connect button click to slot
-        connect(this->submitButton, &QPushButton::clicked, this, &EditEntryDialog::onSubmit);
-
+        connect(this->submit_button_, &QPushButton::clicked, this, &EditEntryDialog::onSubmit);
 }
 void EditEntryDialog::onSubmit()
 {
-    this->window->editEntry(this->serviceName->text().toStdString(),this->login->text().toStdString(),this->password->text().toStdString(),this->place);
+    this->window_->editEntry(this->service_name_->text().toStdString(),this->login_->text().toStdString(),this->password_->text().toStdString(),this->place_);
     this->accept();
 }
